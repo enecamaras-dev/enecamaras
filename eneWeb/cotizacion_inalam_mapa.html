@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cotización Inalámbrica con Plano - EneCámaras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: white;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .barra-superior {
+      background-color: #0078D7;
+      padding: 12px 0;
+      text-align: center;
+      margin-bottom: 30px;
+      border-radius: 8px;
+    }
+
+    .barra-superior a {
+      color: white;
+      text-decoration: none;
+      margin: 0 20px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    h2 {
+      color: #0078D7;
+      margin-bottom: 20px;
+    }
+
+    .formulario {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .campo {
+      background-color: #f0f4f8;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .campo label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+      text-align: center;
+      color: #0078D7;
+      font-size: 16px;
+    }
+
+    .campo input {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .zona-seleccion {
+      margin-bottom: 20px;
+    }
+
+    .icono-camara {
+      width: 40px;
+      height: 40px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/8334/8334315.png');
+      background-size: cover;
+      margin: auto;
+      cursor: pointer;
+    }
+
+    .zona-plano {
+      position: relative;
+      width: 500px;
+      height: 500px;
+      margin: auto;
+      background-color: #f0f8ff;
+      border: 2px solid #0078D7;
+      border-radius: 10px;
+    }
+
+    .interior {
+      position: absolute;
+      top: 100px;
+      left: 100px;
+      width: 300px;
+      height: 300px;
+      background-color: #d0eaff;
+      border: 2px dashed #0078D7;
+      border-radius: 6px;
+    }
+
+    .camara {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/8334/8334315.png');
+      background-size: cover;
+      cursor: grab;
+      transform-origin: center center;
+    }
+
+    .proyeccion {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: rgba(0, 120, 215, 0.2);
+      clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+      transform-origin: center center;
+      pointer-events: none;
+    }
+
+    .contador {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .bloque {
+      background-color: #f0f4f8;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin: 30px auto;
+      text-align: left;
+      max-width: 700px;
+    }
+
+    .bloque h3 {
+      color: #0078D7;
+      margin-bottom: 10px;
+    }
+
+    .bloque p {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .pie-pagina {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #0078D7;
+      color: white;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      max-width: 900px;
+      width: 100%;
+      box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    @media screen and (max-width: 600px) {
+      .zona-plano {
+        width: 100%;
+        height: 400px;
+      }
+
+      .interior {
+        top: 50px;
+        left: calc(50% - 150px);
+        width: 300px;
+        height: 300px;
+      }
+
+      .pie-pagina {
+        font-size: 13px;
+        padding: 8px 12px;
+        border-radius: 0;
+        max-width: 100%;
+        left: 0;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="barra-superior">
+  <a href="index.html">Inicio</a>
+  <a href="empresa.html">Empresa</a>
+  <a href="galeria.html">Galería</a>
+  <a href="test.html">¿Qué instalar?</a>
+  <a href="calendario.html">Agenda visita</a>
+</div>
+
+<h2>Ingresa tus datos para cotizar tu cámara inalámbrica</h2>
+
+<div class="formulario">
+  <div class="campo">
+    <label for="nombre">👤 Nombre y Apellido</label>
+    <input type="text" id="nombre" required>
+  </div>
+  <div class="campo">
+    <label for="telefono">📞 Teléfono</label>
+    <input type="tel" id="telefono" required>
+  </div>
+  <div class="campo">
+    <label for="correo">📧 Correo electrónico</label>
+    <input type="email" id="correo" required>
+  </div>
+  <div class="campo">
+    <label for="comuna">📍 Comuna</label>
+    <input type="text" id="comuna" required>
+  </div>
+</div>
+
+<div style="background-color: #f0f4f8; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 30px; text-align: center; max-width: 700px; margin: auto;">
+  <h3 style="color: #0078D7;">🧭 Instrucciones del plano interactivo</h3>
+  <p style="font-size: 16px; line-height: 1.6; margin-top: 10px;">
+    Haz clic en el ícono de cámara que aparece más abajo para agregar una cámara al plano.<br><br>
+    Una vez agregada:<br>
+    • 📍 Arrástrala con el dedo o el mouse para ubicarla donde quieras.<br>
+    • 🔄 Haz <strong>un clic</strong> sobre la cámara para girarla.<br>
+    • ❌ Haz <strong>doble clic</strong> sobre la cámara si quieres eliminarla.<br><br>
+    El cuadro azul del centro representa el <strong>interior de tu propiedad</strong>.<br>
+    El área más grande alrededor representa el <strong>exterior</strong>.
+  </p>
+</div>
+<div class="zona-seleccion">
+  <div class="icono-camara" id="agregar-camara" title="Agregar cámara"></div>
+</div>
+
+<div class="zona-plano" id="zona-plano">
+  <div class="interior" id="interior"></div>
+</div>
+
+<div class="contador">
+  Cámaras interiores: <span id="contador-interior">0</span> |
+  Cámaras exteriores: <span id="contador-exterior">0</span>
+</div>
+
+<div id="resumen-cotizacion"></div>
+
+<script>
+  const plano = document.getElementById("zona-plano");
+  const interior = document.getElementById("interior");
+  const agregarCamara = document.getElementById("agregar-camara");
+  const contadorInt = document.getElementById("contador-interior");
+  const contadorExt = document.getElementById("contador-exterior");
+
+  let fueArrastrado = false;
+
+  agregarCamara.addEventListener("click", () => {
+    const camara = document.createElement("div");
+    camara.className = "camara";
+    camara.style.left = "10px";
+    camara.style.top = "10px";
+    camara.setAttribute("data-rotacion", "0");
+    plano.appendChild(camara);
+
+    const proyeccion = document.createElement("div");
+    proyeccion.className = "proyeccion";
+    plano.appendChild(proyeccion);
+
+    camara.addEventListener("mousedown", startDrag);
+    camara.addEventListener("touchstart", startDrag);
+    camara.addEventListener("click", () => rotarCamara(camara, proyeccion));
+    camara.addEventListener("touchend", (e) => {
+      if (!fueArrastrado) {
+        rotarCamara(camara, proyeccion);
+      }
+    });
+
+    camara.addEventListener("dblclick", () => {
+  plano.removeChild(camara);
+  plano.removeChild(proyeccion);
+  actualizarContadores();
+});
+
+detectarDobleToque(camara, () => {
+  plano.removeChild(camara);
+  plano.removeChild(proyeccion);
+  actualizarContadores();
+});
+
+
+  actualizarContadores();
+});
+
+  function detectarDobleToque(elemento, callback) {
+  let ultimoToque = 0;
+  elemento.addEventListener("touchend", function () {
+    const ahora = new Date().getTime();
+    if (ahora - ultimoToque < 400) {
+      callback();
+    }
+    ultimoToque = ahora;
+  });
+}
+
+  function startDrag(e) {
+    e.preventDefault();
+    const camara = e.target;
+    const proyeccion = camara.nextElementSibling;
+    const offsetX = (e.clientX || e.touches[0].clientX) - camara.offsetLeft;
+    const offsetY = (e.clientY || e.touches[0].clientY) - camara.offsetTop;
+    fueArrastrado = false;
+
+    function move(e) {
+      fueArrastrado = true;
+      const x = (e.clientX || e.touches[0].clientX) - offsetX;
+      const y = (e.clientY || e.touches[0].clientY) - offsetY;
+      camara.style.left = x + "px";
+      camara.style.top = y + "px";
+      actualizarProyeccion(camara, proyeccion);
+    }
+
+    function stop() {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", stop);
+      document.removeEventListener("touchmove", move);
+      document.removeEventListener("touchend", stop);
+      actualizarContadores();
+    }
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", stop);
+    document.addEventListener("touchmove", move);
+    document.addEventListener("touchend", stop);
+  }
+
+  function rotarCamara(camara, proyeccion) {
+    let rotacion = parseInt(camara.getAttribute("data-rotacion")) || 0;
+    rotacion = (rotacion + 45) % 360;
+    camara.setAttribute("data-rotacion", rotacion);
+    camara.style.transform = `rotate(${rotacion}deg)`;
+    actualizarProyeccion(camara, proyeccion);
+  }
+
+  function actualizarProyeccion(camara, proyeccion) {
+    const rect = camara.getBoundingClientRect();
+    const planoRect = plano.getBoundingClientRect();
+    const rotacion = parseInt(camara.getAttribute("data-rotacion")) || 0;
+
+    proyeccion.style.left = (rect.left - planoRect.left + 16 - 30) + "px";
+    proyeccion.style.top = (rect.top - planoRect.top + 16 - 30) + "px";
+    proyeccion.style.transform = `rotate(${rotacion}deg)`;
+  }
+
+  function actualizarContadores() {
+    let intCount = 0;
+    let extCount = 0;
+    const camaras = plano.querySelectorAll(".camara");
+    camaras.forEach(camara => {
+      const camaraRect = camara.getBoundingClientRect();
+      const interiorRect = interior.getBoundingClientRect();
+      const centroX = camaraRect.left + camaraRect.width / 2;
+      const centroY = camaraRect.top + camaraRect.height / 2;
+
+      if (
+        centroX > interiorRect.left &&
+        centroX < interiorRect.right &&
+        centroY > interiorRect.top &&
+        centroY < interiorRect.bottom
+      ) {
+        intCount++;
+      } else {
+        extCount++;
+      }
+    });
+
+    contadorInt.textContent = intCount;
+    contadorExt.textContent = extCount;
+
+    mostrarResumen(intCount, extCount);
+  }
+
+  function mostrarResumen(intCount, extCount) {
+    const resumen = document.getElementById("resumen-cotizacion");
+    resumen.innerHTML = "";
+
+    const totalCamaras = intCount + extCount;
+    const valorTotal = (intCount * 70000) + (extCount * 120000);
+
+    if (intCount > 0) {
+      resumen.innerHTML += `
+        <div class="bloque">
+          <h3>Cámaras interiores</h3>
+          <p>Cantidad solicitada: <strong>${intCount}</strong></p>
+        </div>
+      `;
+    }
+
+    if (extCount > 0) {
+      resumen.innerHTML += `
+        <div class="bloque">
+          <h3>Cámaras exteriores</h3>
+          <p>Cantidad solicitada: <strong>${extCount}</strong></p>
+        </div>
+      `;
+    }
+
+    resumen.innerHTML += `
+      <div class="bloque">
+        <h3>🔧 Características del sistema Inalámbrico</h3>
+        <p>✅ Se requiere un enchufe cercano para alimentar cada cámara, ya sea interior o exterior</p>
+      </div>
+      <div class="bloque">
+        <h3>📌 Importante</h3>
+        <p style="text-align: justify;">Esta cotización es un estimativo basado en los datos proporcionados. Para obtener un valor exacto y confirmar condiciones técnicas en terreno, recomendamos coordinar una <strong>visita técnica sin costo ni compromiso</strong>. Nuestro equipo evaluará tu espacio y resolverá cualquier duda que tengas.</p>
+      </div>
+      <div class="bloque">
+        <h3>🔒 Recomendación final</h3>
+        <p>Las <strong>${totalCamaras}</strong> cámaras inalámbricas que seleccionaste.</p>
+        <p>Tienen un valor de <strong>$${valorTotal.toLocaleString("es-CL")} CLP</strong>.</p>
+      </div>
+    `;
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  emailjs.init("vXZQcOaz3vqKXbQ4l");
+
+  function enviarCotizacion() {
+    const nombre = document.getElementById("nombre")?.value.trim();
+    const telefono = document.getElementById("telefono")?.value.trim();
+    const correo = document.getElementById("correo")?.value.trim();
+    const comuna = document.getElementById("comuna")?.value.trim();
+
+    if (!nombre || !telefono || !correo || !comuna) {
+      alert("Por favor completa todos los campos antes de enviar.");
+      return;
+    }
+
+    const intCount = parseInt(document.getElementById("contador-interior").textContent) || 0;
+    const extCount = parseInt(document.getElementById("contador-exterior").textContent) || 0;
+    const totalCamaras = intCount + extCount;
+    const valorTotal = (intCount * 70000) + (extCount * 120000);
+    const detalle = `Interiores: ${intCount}, Exteriores: ${extCount}, Total: ${totalCamaras}`;
+
+    const zonaPlano = document.getElementById("zona-plano");
+    if (!zonaPlano) {
+      alert("No se encontró el plano para capturar.");
+      return;
+    }
+
+    html2canvas(zonaPlano, { scale: 1 }).then(canvas => {
+      const imagenPlano = canvas.toDataURL("image/png");
+
+      const templateParams = {
+        nombre,
+        telefono,
+        correo,
+        comuna,
+        detalle,
+        valor_total: `$${valorTotal.toLocaleString("es-CL")} CLP`,
+        imagen_plano: imagenPlano,
+        fecha: new Date().toLocaleDateString("es-CL"),
+        hora: new Date().toLocaleTimeString("es-CL")
+      };
+
+      emailjs.send("service_u5f322u", "template_itqwl7v", templateParams)
+        .then(() => {
+          alert("Tu solicitud fue enviada correctamente. Te contactaremos pronto.");
+        }, (error) => {
+          alert("Hubo un error al enviar la solicitud. Intenta nuevamente.");
+          console.error("EmailJS error:", error);
+        });
+    }).catch(() => {
+      alert("Error al capturar el plano. Intenta nuevamente.");
+    });
+  }
+</script>
+
+<button onclick="enviarCotizacion()" style="padding: 15px 30px; background-color: #28a745; color: white; font-size: 18px; border: none; border-radius: 5px; cursor: pointer; margin-top: 30px;">
+  Quiero que me llamen
+</button>
+
+<div class="pie-pagina">
+  EneCámaras © 2025 — enecamaras@gmail.com | WhatsApp: +56 9 6475 7998
+</div>
+
+</body>
+</html>
