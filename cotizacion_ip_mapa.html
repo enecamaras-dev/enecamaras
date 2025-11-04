@@ -415,6 +415,16 @@ detectarDobleToque(camara, () => {
         <p>Tienen un valor estimado de <strong>$${valorTotal.toLocaleString("es-CL")} CLP</strong>.</p>
       </div>
     `;
+    resumen.innerHTML += `
+  <div style="text-align: center; margin-top: 30px;">
+    <a href="https://link.mercadopago.cl/enecamaras" target="_blank"
+       style="display: inline-block; padding: 14px 28px; background-color: #00A650; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px;">
+       💳 Pagar esta cotización
+    </a>
+    <p style="font-size: 14px; margin-top: 10px; color: #555;">Podrás ingresar el monto manualmente en Mercado Pago.</p>
+  </div>
+`;
+
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
