@@ -4,16 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Presupuesto EneCámaras</title>
+  <link rel="manifest" href="manifest.json" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
   <style>
     html, body {
-      height: 100%;
       margin: 0;
       padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f2f2f2;
       color: #1e2a38;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
     }
 
     header {
@@ -26,11 +35,13 @@
     }
 
     form {
-      background-color: #ffffff;
+      margin: 0 auto;
       padding: 16px;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: #fff;
+      max-width: 480px;
+      width: 100%;
       box-sizing: border-box;
       min-height: calc(100vh - 64px);
       display: flex;
@@ -108,10 +119,8 @@
     }
   </style>
 </head>
-
 <body>
   <header>Presupuesto EneCámaras</header>
-
   <form id="formulario">
     <label>👤 Nombre del cliente:</label>
     <input type="text" id="cliente" required />
@@ -142,11 +151,9 @@
     <textarea id="observaciones" rows="3"></textarea>
 
     <div style="height: 80px;"></div>
-
     <button type="button" onclick="generarPDF()">Generar PDF</button>
   </form>
-
-  <script>
+    <script>
     async function generarPDF() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
