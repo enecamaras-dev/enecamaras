@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presupuesto EneCámaras</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+    color: #1e2a38;
+  }
+
+  h2 {
+    text-align: center;
+    color: #1e2a38;
+    margin-bottom: 20px;
+  }
+
+  form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  label {
+    font-weight: 600;
+    margin-top: 12px;
+    display: block;
+    font-size: 14px;
+  }
+
+  input, textarea, select {
+    width: 100%;
+    padding: 6px 10px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    background-color: #1e2a38;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    font-size: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:hover {
+    background-color: #2c3e50;
+  }
+</style>
+
+</head>
+<body>
+  <h2>Generador de Presupuesto - EneCámaras</h2>
+
+  <form id="formulario">
+    <label>Nombre del cliente:</label>
+    <input type="text" id="cliente" required />
+
+    <label>Dirección del cliente:</label>
+    <input type="text" id="direccion" required />
+
+    <label>Teléfono del cliente:</label>
+    <input type="text" id="telefono" />
+
+    <label>Trabajo a realizar:</label>
+    <textarea id="trabajo" rows="4" required></textarea>
+
+    <label>Valor total ($):</label>
+    <input type="number" id="valor" required />
+
+    <label>Forma de pago:</label>
+    <select id="pago">
+      <option value="Efectivo">Efectivo</option>
+      <option value="Transferencia">Transferencia</option>
+      <option value="Cuotas">Cuotas</option>
+    </select>
+
+    <label>Fecha estimada de instalación:</label>
+    <input type="date" id="fecha" />
+
+    <label>Observaciones:</label>
+    <textarea id="observaciones" rows="3"></textarea>
+
+    <button type="button" onclick="generarPDF()">Generar PDF</button>
+  </form>
+
+  <script>
+  async function generarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const datos = {
+      fecha: new Date().toLocaleDateString(),
+      cliente: document.getElementById("cliente").value,
+      direccion: document.getElementById("direccion").value,
+      telefono: document.getElementById("telefono").value,
+      trabajo: document.getElementById("trabajo").value,
+      valor: document.getElementById("valor").value,
+      pago: document.getElementById("pago").value,
+      fechaInstalacion: document.getElementById("fecha").value,
+      observaciones: document.getElementById("observaciones").value,
+    };
+
+    const garantia = `Garantía Postventa\n\nEn EneCámaras nos comprometemos con la calidad y satisfacción de nuestros clientes. Por ello, ofrecemos la siguiente garantía postventa:\n\n• Garantía de dispositivos (6 meses): Cualquier desperfecto en los dispositivos instalados será cubierto durante un período de 6 meses. En caso de falla, el equipo será reemplazado por uno nuevo sin costo adicional.\n\n• Modificaciones de instalación (3 meses): Durante un período de 3 meses desde la fecha de instalación, se podrán realizar modificaciones en la instalación sin costo, previa coordinación con nuestro equipo técnico.`;
+
+    let y = 20;
+    doc.setFontSize(16);
+    doc.text("PRESUPUESTO DE SEGURIDAD", 105, y, { align: "center" }); y += 10;
+
+    doc.setFontSize(12);
+    doc.text("ENECÁMARAS", 10, y); y += 6;
+    doc.text("RUT: 78.188.505 - 3", 10, y); y += 6;
+    doc.text("Dirección: Matta 644, Quilpué", 10, y); y += 6;
+    doc.text("Teléfono / WhatsApp: +56 9 64757998", 10, y); y += 6;
+    doc.text("Correo electrónico: enecamaras@gmail.com", 10, y); y += 10;
+
+    doc.text(`Fecha: ${datos.fecha}`, 10, y); y += 8;
+    doc.text(`Cliente: ${datos.cliente}`, 10, y); y += 6;
+    doc.text(`Dirección del cliente: ${datos.direccion}`, 10, y); y += 6;
+    doc.text(`Teléfono: ${datos.telefono}`, 10, y); y += 10;
+
+    doc.text("Trabajo a realizar:", 10, y); y += 6;
+    doc.text(doc.splitTextToSize(datos.trabajo, 180), 10, y); y += 30;
+
+    doc.text(`Valor total: $${datos.valor}`, 10, y); y += 6;
+    doc.text(`Forma de pago: ${datos.pago}`, 10, y); y += 6;
+    doc.text(`Fecha estimada de instalación: ${datos.fechaInstalacion}`, 10, y); y += 10;
+
+    doc.text("Observaciones:", 10, y); y += 6;
+    doc.text(doc.splitTextToSize(datos.observaciones, 180), 10, y); y += 20;
+
+    doc.text("------------------------------------------------------------", 10, y); y += 10;
+    doc.setFontSize(13);
+    doc.text("Garantía Postventa", 105, y, { align: "center" }); y += 8;
+    doc.setFontSize(11);
+    doc.text(doc.splitTextToSize(garantia, 180), 10, y);
+
+    doc.save(`Presupuesto_EneCamaras_${datos.cliente}.pdf`);
+  }
+</script>
+
+</body>
+</html>
