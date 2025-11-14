@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <title>Presupuesto EneCámaras</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -24,12 +25,14 @@
   }
 
   form {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 0;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 0;
+  max-width: 480px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
 
   label {
     font-weight: 600;
@@ -112,6 +115,8 @@
     <label>Observaciones:</label>
     <textarea id="observaciones" rows="3"></textarea>
 
+    <div style="height: 80px;"></div>
+    
     <button type="button" onclick="generarPDF()">Generar PDF</button>
   </form>
 
